@@ -5,8 +5,8 @@
  <mapper namespace="com.ysd.mapper.ModuleMapper">
  
     <select id="GetModulesByRoleIdLayUI" resultType="com.ysd.entity.Modules"  >
-         select c.* from roles a inner join rolemodules b on #{roleId}=b.RoleId 
-           inner join modules  c on c.Id=b.ModuleId
+         select c.*  from roles a inner join rolemodules b on #{roleId}=b.RoleId 
+           inner join modules  c on c.Id=b.ModuleId 
           
     </select>
     <select id="GetAllModuleLayUI" resultType="com.ysd.entity.Modules">
@@ -28,14 +28,16 @@
     </insert>
     
    <insert id="AddUserToModule">
-       insert into rolemodules
+       insert into rolemodules(Id,RoleId,ModuleId)
        values(uuid(),#{RoleId},#{ModuleId})
-        
+       
+       
     </insert>
     
     <delete id="RemoveUserFromModule">
       delete from rolemodules
-       where RoleId=#{RoleId} and ModuleId=#{ModuleId}
+       where RoleId=#{RoleId} 
+      
     </delete>
      
     <update id="UpdateModule">

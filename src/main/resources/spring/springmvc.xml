@@ -47,7 +47,7 @@ http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	<!-- 	登录拦截器 -->
 		<mvc:interceptor>
 		<!-- 	要拦截的路径，/**代表拦截所有 -->
-			<mvc:mapping path="/api/login" />
+			<mvc:mapping path="/**" />
 			<!-- 拦截器的全限定路径 -->
 			<bean class="com.ysd.interceptor.LoginInterceptor" />
 		</mvc:interceptor>

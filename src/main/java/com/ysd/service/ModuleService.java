@@ -1,6 +1,7 @@
 package com.ysd.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -42,5 +43,5 @@ public interface ModuleService {
    /*
     * ÒÆ³ýÄ£¿é
     * **/
-   int RemoveUserFromModule(String RoleId,Integer ModuleId);
+   int RemoveUserFromModule(String RoleId);
 }

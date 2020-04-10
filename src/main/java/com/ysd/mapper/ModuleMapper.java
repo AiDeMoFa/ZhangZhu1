@@ -1,6 +1,7 @@
 package com.ysd.mapper;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -41,7 +42,7 @@ public interface ModuleMapper {
    /*
     * ÒÆ³ýÄ£¿é
     * **/
-   int RemoveUserFromModule(@Param("RoleId")String RoleId,@Param("ModuleId")Integer ModuleId);
+   int RemoveUserFromModule(@Param("RoleId")String RoleId);
    
    
 }

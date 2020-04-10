@@ -20,12 +20,13 @@ public class LoginInterceptor implements HandlerInterceptor{
 		String url=request.getServletPath();
 		String uid=redisTrans.get("uid");
 		System.out.println(uid);
-		if(uid!=null && !uid.equals("")) {
-			return true;
-		}else {
-			redisTrans.set("message", "ÓÃ»§ÃØÔ¿Îª¿Õ");			
-		}
+	
 		if (url.indexOf("/api/login") >= 0) {
+			
+				return true;
+		  
+		}
+		if(uid!=null&&uid!="") {
 			return true;
 		}
 		

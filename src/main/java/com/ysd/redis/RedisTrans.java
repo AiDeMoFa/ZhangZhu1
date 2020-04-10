@@ -35,7 +35,6 @@ public final class RedisTrans {
 			// 通过set方法设置存储的内容(key,value,时间，时间的单位)
 			stringRedisTemplate.setKeySerializer(new StringRedisSerializer());
 			
-
 			stringRedisTemplate.opsForValue().set(key, object, 6000, TimeUnit.SECONDS);
 
 			result = true;

@@ -23,17 +23,17 @@
     
     <select id="GetSysRightsJsonLayUI" resultType="com.ysd.entity.Modules">
     
-             select * from modules where ParentId in 
-             (select c.Id from roles a inner join rolemodules b on a.Id=b.RoleId inner join modules c on b.ModuleId=c.Id where 
+             select * from modules where Id in 
+             (select DISTINCT(c.ParentId) from roles a inner join rolemodules b on a.Id=b.RoleId inner join modules c on b.ModuleId=c.Id where 
                <foreach collection="list" item="item" separator="or">
                  a.Name= #{item}
                </foreach>)
-               union 
+              union 
               select c.* from roles a inner join rolemodules b on a.Id=b.RoleId
                inner join modules c on b.ModuleId=c.Id where 
                <foreach collection="list" item="item" separator="or">
                  a.Name= #{item}
-               </foreach>
+               </foreach> 
               
     </select>
     

@@ -2,14 +2,17 @@ package com.ysd.controller;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,22 +31,21 @@ public class ModuleController {
 	  //根据角色id获取模块信息
 	  @GetMapping(value="/GetModulesByRoleIdLayUI")
 	  public @ResponseBody List<Object>
-	  GetModulesByRoleIdLayUI(String roleId) {
-		  List<Object> list = new ArrayList<Object>(); 
-	  List<Modules> modules=moduleService.GetModulesByRoleIdLayUI(roleId);
-	  for (Modules m: modules) {   
-          Map<String,Object> mapArr = new LinkedHashMap<String, Object>(); 
-          if(m.getParentId()==0){//判断是否为父极
-            mapArr.put("id", m.getId()); 
-            mapArr.put("title", m.getName()); 
-            mapArr.put("children", Manager.menuChild(m.getId(),modules));  //去子集查找遍历
-            list.add(mapArr); 
-          } 
-        } 
-	   System.out.println(list);
+	  GetModulesByRoleIdLayUI(String RoleId) {
+	  Map<String, Object> resulmMap=Manager.getResultMap();
+	  List<Modules> modules=moduleService.GetModulesByRoleIdLayUI(RoleId);
+	  List<Object> list = new ArrayList<Object>();
+	  
+	  for (Modules m : modules) {
+			Map<String, Object> map = new HashMap<String, Object>();
+					map.put("id", m.getId());
+					list.add(map);
+		}
+		
 	  return list;
 	  
 	  }
+	
 	//获取所有模块信息
 	  @GetMapping(value="/GetAllModuleLayUI")
 	  public @ResponseBody List<Object>
@@ -59,7 +61,7 @@ public class ModuleController {
             list.add(mapArr); 
           } 
         } 
-	   
+	  
 	  return list;
 	  
 	  }
@@ -150,15 +152,20 @@ public class ModuleController {
 	  
 	  }
 	  
-	  //分配用户角色
+	  //分配角色模块
 	  @GetMapping(value="AddUserToModule")
 	  public @ResponseBody Map<String, Object>
-	  AddUserToModule(String RoleId,Integer ModuleId){
+	  AddUserToModule(String RoleId,@RequestParam(value="ModuleId")List<Integer> ModuleId){
 		  String Id="";
+		  int n=0;
 		  Map<String, Object> resultMap=Manager.getResultMap();
-		  int n=moduleService.AddUserToModule(Id,RoleId, ModuleId);
+		  System.out.println(ModuleId);
+		  for (Integer integer : ModuleId) {
+			 n=moduleService.AddUserToModule(Id,RoleId, integer);
+		}
 		  if(n>0) {
 			  resultMap.put("success", true);
+			  System.out.println("添加成功");
 		  }
 		  
 		   return resultMap;
@@ -166,11 +173,15 @@ public class ModuleController {
 	  //移除用户角色
 	  @GetMapping(value="RemoveUserFromModule")
 	  public @ResponseBody Map<String, Object>
-	  RemoveUserFromModule(Integer ModuleId,String RoleId){
+	  RemoveUserFromModule(String RoleId){
 		  Map<String, Object> resultMap=Manager.getResultMap();
-		  int n=moduleService.RemoveUserFromModule(RoleId, ModuleId);
+		  int n=moduleService.RemoveUserFromModule(RoleId);
+		
+			  
+		  
 		  if(n>0) {
 			  resultMap.put("success", true);
+			  System.out.println("删除成功");
 		  }
 		  
 		   return resultMap;

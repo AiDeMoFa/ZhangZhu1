@@ -121,19 +121,25 @@ public class RoleController {
 	  public Map<String,Object> getTree(@RequestParam(value="roleNames")List<String> roleNames) {
 		    Map<String, Object> map=Manager.getResultMap();
 	        List<Object> list = new ArrayList<Object>(); 
-	        List<Modules> modules=roleService.GetSysRightsJsonLayUI(roleNames);
-	        
-	        for (Modules m: modules) {   
-	              Map<String,Object> mapArr = new LinkedHashMap<String, Object>(); 
-	              if(m.getParentId()==0){//判断是否为父极
-	                mapArr.put("id", m.getId()); 
-	                mapArr.put("title", m.getName()); 
-	                mapArr.put("children", Manager.menuChild(m.getId(),modules));  //去子集查找遍历
-	                list.add(mapArr); 
-	              } 
-	            } 
-	        map.put("message",list);
-	        map.put("success", true);
+	        if(roleNames.size()>0) {
+	        	System.out.println(roleNames);
+	        	System.out.println("不为空");
+	        	  List<Modules> modules=roleService.GetSysRightsJsonLayUI(roleNames);
+	  	        for (Modules m: modules) {   
+	  	              Map<String,Object> mapArr = new LinkedHashMap<String, Object>(); 
+	  	              if(m.getParentId()==0){//判断是否为父极
+	  	                mapArr.put("id", m.getId()); 
+	  	                mapArr.put("title", m.getName()); 
+	  	                mapArr.put("children", Manager.menuChild(m.getId(),modules));  //去子集查找遍历
+	  	                list.add(mapArr); 
+	  	              } 
+	  	            } 
+	  	        map.put("message",list);
+	  	        map.put("success", true);
+	  	       
+	        }else {
+	        	 map.put("message","没有找到对应的角色");
+	        }
 	        return map;
 	    }
        

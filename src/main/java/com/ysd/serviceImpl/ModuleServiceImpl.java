@@ -1,6 +1,7 @@
 package com.ysd.serviceImpl;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -51,9 +52,9 @@ public class ModuleServiceImpl implements ModuleService{
 		return moduleMapper.AddUserToModule(Id,RoleId, ModuleId);
 	}
 
-	public int RemoveUserFromModule(String RoleId, Integer ModuleId) {
+	public int RemoveUserFromModule(String RoleId) {
 		// TODO Auto-generated method stub
-		return moduleMapper.RemoveUserFromModule(RoleId, ModuleId);
+		return moduleMapper.RemoveUserFromModule(RoleId);
 	}
 	
 	

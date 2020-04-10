@@ -43,10 +43,10 @@ public class UsersController {
 		  Map<String, Object> resultMap=Manager.getResultMap();
 		  Users u =usersService.logins(users.getLoginName(), users.getPassWord());
 		  Date date=new Date();
-		  String error="";
 		  if(u!=null) {
 			  int n=usersService.updateTime(u.getId(), date);			  
 			  String uid=u.getId();
+			  System.out.println(u);
 			  redisTrans.set("uid", uid);
 			  String isLockout=u.getIslockout();
 			  List<Roles> roles=roleService.GetRolesByUserId(uid);
@@ -56,14 +56,11 @@ public class UsersController {
 			 
 			  		  
 			  if(u.getIslockout().equals("否")) {
-				  if(uid=="") {
-					 error=redisTrans.get("message");
-				  }
 				
 				  Map<String, Object> messageMap=new HashMap<String, Object>();
 				  messageMap.put("roleName", roleNames);
-				  messageMap.put("error", error);	
-				  messageMap.put("uid", uid);
+				  messageMap.put("error", "秘钥为空,或者过期");	
+				  messageMap.put("uid", redisTrans.get("uid"));
 				  messageMap.put("roleId", roleId);
 				  messageMap.put("isLockout", isLockout);
 				  resultMap.put("message", messageMap);
